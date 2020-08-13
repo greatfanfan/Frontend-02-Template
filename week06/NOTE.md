@@ -50,3 +50,6 @@ In CSS, the ::first-line pseudo-element can only have an effect when attached to
 
 作业1:
 编写一个match函数
+
+优秀作业参考：
+https://github.com/uujx/Frontend-02-Template/blob/master/week06/NOTE.md

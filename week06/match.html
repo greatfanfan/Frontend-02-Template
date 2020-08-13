@@ -1,0 +1,106 @@
+<html>
+  <head>
+    <title>Demo - HTML</title>
+    <style type="text/css">
+      #container {
+        width: 500px;
+        height: 300px;
+        display: flex;
+        background-color: rgb(0, 0, 255);
+      }
+      #container #myid {
+        width: 200px;
+        height: 100px;
+        background-color: rgb(255, 0, 0);
+      }
+      #container .c1 {
+        flex: 1;
+        background-color: rgb(0, 255, 0);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div id="myid"></div>
+      <div class="c1" ></div>
+    </div>
+  </body>
+  <script type="text/javascript">
+    function match (selector, element) {
+      if (!(typeof selector === 'string' && selector.length)) {
+        throw new Error('Parameter 0 should be a non-empty string. ');
+      }
+
+      if (!(element && element.nodeType === 1)) {
+        throw new Error('Parameter 1 should be a document node. ');
+      }
+
+      function matchNode (selector, node) {
+        selector = selector.trim();
+        if (!selector.trim) {
+          return false;
+        }
+
+        var selectorItem = selector.split(/(?=[\.#])/);
+
+        while (selectorItem.length) {
+          var currentItem = selectorItem.pop();
+          if (!currentItem || currentItem === '*') {
+            // do nothing
+          } else if (currentItem[0] === '#') {
+            if (!node.getAttribute('id') || node.getAttribute('id') !== currentItem.slice(1)) {
+              return false;
+            }
+          } else if (currentItem[0] === '.') {
+            if (!node.getAttribute('class') || !node.getAttribute('class').split(' ').map(chunk => chunk.trim()).includes(currentItem.slice(1))) {
+              return false;
+            }
+          } else {
+            if (node.tagName !== currentItem.toUpperCase()) {
+              return false;
+            }
+          }
+        }
+
+        return true;
+      }
+
+      var selectorUnit = selector.split(' ');
+      var currentUnit = selectorUnit.pop();
+
+      if (matchNode(currentUnit, element)) {
+        element = element.parentNode;
+      } else {
+        return false;
+      }
+
+      while (selectorUnit.length) {
+        currentUnit = selectorUnit.pop();
+        if (!element.parentNode) {
+          return false;
+        } else if (matchNode(currentUnit, element)) {
+          element = element.parentNode;
+        }
+      }
+
+      return true;
+    }
+  </script>
+  <script type="text/javascript">
+    console.log('---- match ----');
+    console.log(match('#myid', document.querySelector('#myid'))); // true
+    console.log(match('div', document.querySelector('#myid'))); // true
+    console.log(match('div div', document.querySelector('#myid'))); // true
+    console.log(match('div #myid', document.querySelector('#myid'))); // true
+    console.log(match('div div#myid', document.querySelector('#myid'))); // true
+    console.log(match('.c1', document.querySelector('.c1'))); // true
+    console.log(match('#container .c1', document.querySelector('.c1'))); // true
+    console.log(match('#container div', document.querySelector('.c1'))); // true
+    console.log(match('#container div', document.querySelector('#myid'))); // true
+    console.log(match('#container *', document.querySelector('.c1'))); // true
+    console.log(match('#container *', document.querySelector('#myid'))); // true
+    console.log('---- not match ----');
+    console.log(match('.c1', document.querySelector('#myid'))); // false
+    console.log(match('div div.c1', document.querySelector('#myid'))); // false
+  </script>
+</html>
