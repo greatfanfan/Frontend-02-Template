@@ -42,7 +42,17 @@
   1. 属性 
     `@keyframes`： 定义  
     `animation`: 使用  
+    `transition`: [property, duration, delay, timing-function] 
+  2. http://cubic-bezier.com 抛物线
 
+## 颜色
+  1. CMYK、RGB
+  2. HSL、HSV 【H：色相 S：纯度 L：亮度 V：明度】
+
+## 绘制
+  1. 几何图形 border、box-shadow、border-radius
+  2. 文字 font、text-decoration
+  3. 位图 background-image 【`Shader`】
 
 
 
