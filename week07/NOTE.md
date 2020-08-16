@@ -53,6 +53,7 @@
   1. 几何图形 border、box-shadow、border-radius
   2. 文字 font、text-decoration
   3. 位图 background-image 【`Shader`】
+    data uri + svg
 
 
 
